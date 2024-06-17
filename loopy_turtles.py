@@ -7,7 +7,6 @@ Do not run this file directly.
 Rather, call any of these functions from main.py and run that file.
 """
 
-# import the turtle module, which is included in the regular Python distribution
 import turtle
 
 
@@ -21,16 +20,13 @@ def create_turtle(stroke_color, bg_color):
     :returns: The turtle object with the color settings applied.
     """
 
-    # create the turtle and set its trial color
     t = turtle.Turtle()
-    t.shape("turtle")  # make it look like a turtle
-    t.color(stroke_color)  # set the color of the trail left by the turtle
+    t.color(stroke_color)
 
-    # set the window color
-    window = turtle.Screen()  # get access to the window where the turtle will appear
-    window.bgcolor(bg_color)  # set the window's background color
+    window = turtle.Screen()
+    window.bgcolor(bg_color)
 
-    return t  # return the turtle
+    return t
 
 
 def pick_up_and_move_turtle(t, x, y):
@@ -44,9 +40,9 @@ def pick_up_and_move_turtle(t, x, y):
     :param y: The destination y coordinate.
     """
 
-    t.penup()  # lift up the turtle's 'pen', so it doesn't draw yet.
-    t.setposition(x, y)  # move the turtle to the target position
-    t.pendown()  # put down the turtle's 'pen', so it is ready to draw
+    t.penup()
+    t.setposition(x, y)
+    t.pendown()
 
 
 def print_turtle_position(t):
@@ -58,7 +54,7 @@ def print_turtle_position(t):
     """
     print(
         "Turtle at", t.position(), "rotated", t.heading(), "degrees"
-    )  # print out the turtle's current position
+    )
 
 
 def draw_square(t, start_x, start_y, length, rotation_direction, fill_color):
@@ -78,6 +74,20 @@ def draw_square(t, start_x, start_y, length, rotation_direction, fill_color):
     :param rotation_direction: Either 'left' or 'right', indicating the direction the turtle should rotate after it completes each line of the rectangle.
     :param fill_color: The color with which to fill in the area drawn by the turtle.
     """
+    pick_up_and_move_turtle(t, start_x, start_y)
+
+    t.fillcolor(fill_color)
+    t.begin_fill()
+
+    for i in range(4):
+        print_turtle_position(t)
+        t.forward(length)
+        if rotation_direction == 'left':
+            t.left(90)
+        elif rotation_direction == 'right':
+            t.right(90)
+
+    t.end_fill()
 
 
 def draw_star(
@@ -100,3 +110,26 @@ def draw_star(
     :param initial_rotation_direction: The direction of the first rotation the turtle should make when drawing each point, either 'left' or 'right'.
     :param fill_color: The color with which to fill in the area drawn by the turtle.
     """
+
+    pick_up_and_move_turtle(t, start_x, start_y)
+
+    t.fillcolor(fill_color)
+    t.begin_fill()
+
+    small_angle = angle - 72
+
+    for i in range(5):
+        print_turtle_position(t)
+        t.forward(length)
+        if initial_rotation_direction == 'left':
+            t.left(angle)
+        elif initial_rotation_direction == 'right':
+            t.right(angle)
+        t.forward(length)
+        if initial_rotation_direction == 'left':
+            t.right(small_angle)
+        elif initial_rotation_direction == 'right':
+            t.left(small_angle)
+
+    t.end_fill()
+
